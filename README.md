@@ -1,18 +1,27 @@
-Test vids and test sounds.
-Using references:
-http://stackoverflow.com/questions/11779490/how-to-add-a-new-audio-not-mixing-into-a-video-using-ffmpeg
-http://www.bogotobogo.com/FFMpeg/ffmpeg_video_test_patterns_src.php
+vidSwap
 
-Give a few test vids using ffmpeg.
-Test bars with countdown:
-./ffmpeg -f lavfi -i testsrc=duration=6:size=1280x720:rate=30 testsrc.mpg
-Solid color:
-./ffmpeg -f lavfi -i color=c=green:duration=6:s=1280x720:r=30 colorsrc.mpg
+iOS devices can play a video audibly in the background when there's another video that
+currently has focus.  My use case is serving ads via the ad tech Vendri.  I'll have my
+show with focus in the foreground.  Then I'll pause my video in code to allow an ad to
+play.  However, the ad plays inline, invisibly, behind the video that currently has
+focus.  
 
-Add some audio:
-./ffmpeg -i testsrc.mpg -i testpluck.mp3 -codec copy -shortest bars.mpg
-./ffmpeg -i colorsrc.mpg -i testtone.mp3 -codec copy -shortest green.mpg
+For this test I create two videos and try different scenarios and see what breaks
+what.  Honestly I don't know!
 
-OK, so .mpg isn't allowed on the web.  Let's convert!
-./ffmpeg -i bars.mpg bars.mp4
-./ffmpeg -i green.mpg green.mp4
+First test:
+Two video tags on same level in dom, no css.  On hitting the external 'play' button 
+in the markup, .play() method will be called on both videos simultaneously.  See
+what happens when one video is in the markup before the other, and what happens when
+you change the order in the code.
+
+Since sound encoding that works on iphone is escaping me, I'll do this without it. 
+
+Both videos will be a the same video, just one will have the audio go on and off
+rapidly to indicate that it is playing.  Seriously, I really could not figure out
+how to make an mp4 play on my iPhone!  Luckily I have an mp4 of Big Buck Bunny
+that works on all my test devices.
+
+Seriously?  Changing the video volume from javascript doesn't work on iOS by
+default?  I really don't need this stress.  OK.  Must knuckle down and really
+learn the H.264 codec for ffmpeg and do a test vid myself.

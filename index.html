@@ -1,18 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>test swap</title>
+  <meta charset="UTF-8">
+  <title>test swap</title>
+  <style>
+    #play_button {
+      display: block;
+    }
+  </style>
 </head>
 <body>
-<video id="vid1" width="320" height="240" controls>
-    <source src="bars.mp4" type="video/mp4">
+  <video id="vid1" width="320" height="240" controls>
+    <source src="http://vendri.com/test/assets/big_buck_bunny.mp4" type="video/mp4">
     Your browser does not support the video tag.
-</video>
-<video id="vid2" width="320" height="240" controls>
-    <source src="green.mp4" type="video/mp4">
+  </video>
+  <video id="vid2" width="320" height="240" webkit-playsinline controls>
+    <source src="" type="video/mp4">
     Your browser does not support the video tag.
-</video>
+  </video>
+  <button id="play_button">PLAY</button>
 
+  <script>
+    var button, vid1, vid2, vid2src;
+
+    button = document.getElementById("play_button");
+    vid1 = document.getElementById("vid1");
+    vid2 = document.getElementById("vid2");
+    vid2src = 'http://techslides.com/demos/sample-videos/small.mp4';
+
+    function playAd(){
+      vid1.pause();
+      vid2.src = vid2src;
+      vid2.play();
+      vid2.onended = function() {
+        vid1.play();
+      };
+    }
+
+    function runTest() {
+      vid2.play(); // give gesture permission on touch devices
+      vid2.pause();
+
+      vid1.play(); // begin content video
+
+      setTimeout(playAd, 5000); // schedule an ad for 3 seconds in future
+    }
+
+    button.onclick = function clicker() {
+      runTest();
+    };
+  </script>
 </body>
 </html>
